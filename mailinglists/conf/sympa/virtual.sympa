@@ -1,4 +1,0 @@
-sympa-request@{{ DOMAIN }}	postmaster@localhost
-sympa-owner@{{ DOMAIN }}	postmaster@localhost
-
-{{ POSTMASTER }}@{{ DOMAIN }}	mail@c-holtermann.net
