@@ -44,9 +44,8 @@ convert("/conf/rsyslog/rsyslog.conf", "/etc/rsyslog.conf")
 for postfix_file in glob.glob("/conf/postfix/*.cf"):
     convert(postfix_file, os.path.join("/etc/postfix", os.path.basename(postfix_file)))
 
-if os.path.exists("/overrides/postfix.cf"):
-    for line in open("/overrides/postfix.cf").read().strip().split("\n"):
-        os.system('postconf -e "{}"'.format(line))
+for postfix_file in glob.glob("/tmp/overrides/*.cf"):
+    convert(postfix_file, os.path.join("/overrides", os.path.basename(postfix_file)))
 
 if os.path.exists("/overrides/postfix.master"):
     for line in open("/overrides/postfix.master").read().strip().split("\n"):
