@@ -77,7 +77,7 @@ shutil.copyfile("/conf/sympa/list_aliases.tt2", sysconfdir + "/list_aliases.tt2"
 runBashCommands([ "mkdir " + os.environ["SYMPADATADIR"],
         "touch " + os.environ["SYMPADATADIR"] + "/sympa.db",
         "chown sympa:sympa " + os.environ["SYMPADATADIR"],
-        "chown sympa:sympa " + os.environ["SYMPADATADIR"] + "sympa.db",
+        "chown sympa:sympa " + os.environ["SYMPADATADIR"] + "/sympa.db",
         "chmod a+w " + os.environ["SYMPADATADIR"],
         "touch " + sysconfdir +  "transport.sympa",
 	"touch " + sysconfdir + "virtual.sympa",
