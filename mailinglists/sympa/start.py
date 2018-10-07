@@ -109,11 +109,10 @@ with open(sysconfdir + "virtual.sympa", "a") as fo:
     with open("/conf/sympa/virtual.sympa.out", "r") as fi: 
         fo.write(fi.read())
 
-shutil.copyfile(sysconfdir + "virtual.sympa", sympadatadir + "virtual.sympa")
-
-
 runBashCommands(["postmap hash:" + sysconfdir + "transport.sympa",
 	"postmap hash:" + sysconfdir + "virtual.sympa"])
+shutil.copyfile(os.path.join(sysconfdir, "virtual.sympa"), os.path.join(sympadatadir, "virtual.sympa"))
+shutil.copyfile(os.path.join(sysconfdir, "virtual.sympa.db"), os.path.join(sympadatadir, "virtual.sympa.db"))
 
 #apache2
 convert("/conf/apache2/httpd_append.conf", "/conf/apache2/httpd_append.conf.out")
