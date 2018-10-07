@@ -26,6 +26,9 @@ RUN mv /etc/apache2/conf.d/proxy.conf /etc/apache2/conf.d/proxy.conf.package
 COPY conf /conf
 COPY start.py /start.py
 
+RUN mkdir -p /tmp/overrides
+COPY overrides/* /tmp/overrides/
+
 # Disable getty's
 RUN sed -i 's/^\(tty\d\:\:\)/#\1/g' /etc/inittab \
 	&& sed -i \
