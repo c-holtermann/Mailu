@@ -1,0 +1,9 @@
+version: '3'
+services:
+  sympa:
+    env_file: .env
+    restart: always
+    volumes:
+      - "$ROOT/data:/data"
+      - "$ROOT/overrides:/overrides"
+    build: .

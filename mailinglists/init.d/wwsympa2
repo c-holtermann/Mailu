@@ -1,0 +1,21 @@
+#!/sbin/openrc-run
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend() {
+	need apache2 rsyslog
+}
+
+start() {
+	/etc/init.d/wwsympa start
+}
+
+stop() {
+	/etc/init.d/wwsympa stop
+}
+
+start_pre() {
+	ebegin "Starting wwsympa"
+}
+

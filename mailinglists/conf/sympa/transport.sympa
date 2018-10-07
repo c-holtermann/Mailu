@@ -1,0 +1,5 @@
+{{ DOMAIN }}	error:User unknown in recipient table
+sympa@{{ DOMAIN }}          sympa:sympa@{{ DOMAIN }}
+listmaster@{{ DOMAIN }}     sympa:listmaster@{{ DOMAIN }}
+bounce@{{ DOMAIN }}         sympabounce:sympa@{{ DOMAIN }}
+abuse-feedback-report@{{ DOMAIN }}  sympabounce:sympa@{{ DOMAIN }}
