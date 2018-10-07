@@ -1,0 +1,1 @@
+virtual_alias_maps=\${sql}sqlite-virtual_alias_maps.cf,hash:/etc/postfix/virtual-sympa.map
