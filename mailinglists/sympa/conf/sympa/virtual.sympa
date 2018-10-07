@@ -1,0 +1,2 @@
+sympa-request@{{ DOMAIN }}	{{ POSTMASTER }}@{{ DOMAIN }}
+sympa-owner@{{ DOMAIN }}	{{ POSTMASTER }}@{{ DOMAIN }}
