@@ -104,6 +104,9 @@ with open(sysconfdir + "virtual.sympa", "a") as fo:
     with open("/conf/sympa/virtual.sympa.out", "r") as fi: 
         fo.write(fi.read())
 
+shutil.copyfile(sysconfdir + "virtual.sympa", sympadatadir + "virtual.sympa")
+
+
 runBashCommands(["postmap hash:" + sysconfdir + "transport.sympa",
 	"postmap hash:" + sysconfdir + "virtual.sympa"])
 
