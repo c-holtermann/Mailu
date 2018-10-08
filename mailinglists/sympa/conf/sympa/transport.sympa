@@ -3,3 +3,5 @@ sympa@{{ DOMAIN }}          sympa:sympa@{{ DOMAIN }}
 listmaster@{{ DOMAIN }}     sympa:listmaster@{{ DOMAIN }}
 bounce@{{ DOMAIN }}         sympabounce:sympa@{{ DOMAIN }}
 abuse-feedback-report@{{ DOMAIN }}  sympabounce:sympa@{{ DOMAIN }}
+
+test2@{{ DOMAIN }} smtp:{{ COMPOSE_PROJECT_NAME }}_smtp_1
