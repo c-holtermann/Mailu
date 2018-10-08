@@ -1,3 +1,5 @@
+This Fork aims to integrate sympa maililing lists into mailu.
+
 <p align="leftr"><img src="docs/assets/logomark.png" alt="Mailu" height="200px"></p>
 
 
