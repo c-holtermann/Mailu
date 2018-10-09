@@ -49,19 +49,6 @@ for postfix_file in glob.glob("/tmp/overrides/*.cf"):
 
 for postfix_file in glob.glob("/tmp/overrides/*.map"):
     convert(postfix_file, os.path.join("/overrides", os.path.basename(postfix_file)))
-#if os.path.exists("/overrides/postfix.cf"):
-#    for line in open("/overrides/postfix.cf").read().strip().split("\n"):
-#        os.system('postconf -e "{}"'.format(line))
-
-#if os.path.exists("/overrides/postfix.master"):
-#    for line in open("/overrides/postfix.master").read().strip().split("\n"):
-#        os.system('postconf -Me "{}"'.format(line))
-
-#for map_file in glob.glob("/overrides/*.map"):
-#    destination = os.path.join("/etc/postfix", os.path.basename(map_file))
-#    shutil.copyfile(map_file, destination)
-#    os.system("postmap {}".format(destination))
-#    os.remove(destination)
 
 runBashCommands(["usr/lib/postfix/post-install meta_directory=/etc/postfix create-missing",
 	"/usr/lib/postfix/master &"])
