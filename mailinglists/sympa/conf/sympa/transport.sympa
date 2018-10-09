@@ -5,3 +5,5 @@ bounce@{{ DOMAIN }}         		sympabounce:sympa@{{ DOMAIN }}
 abuse-feedback-report@{{ DOMAIN }}  	sympabounce:sympa@{{ DOMAIN }}
 
 postmaster@{{ DOMAIN }} 		smtp:{{ COMPOSE_PROJECT_NAME }}_smtp_1
+
+* 					smtp:{{ COMPOSE_PROJECT_NAME }}_smtp_1
