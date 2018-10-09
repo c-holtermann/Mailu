@@ -1,4 +1,4 @@
-{{ DOMAIN }}				error:User unknown in recipient table
+{{ DOMAIN }}				smtp:{{ COMPOSE_PROJECT_NAME }}_smtp_1
 sympa@{{ DOMAIN }}          		sympa:sympa@{{ DOMAIN }}
 listmaster@{{ DOMAIN }}     		sympa:listmaster@{{ DOMAIN }}
 bounce@{{ DOMAIN }}         		sympabounce:sympa@{{ DOMAIN }}
