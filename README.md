@@ -1,6 +1,6 @@
 This Fork aims to integrate sympa maililing lists into mailu.
 
-It's under development. Changes happen in branch [front-sympa](https://github.com/c-holtermann/Mailu/tree/front-sympa).
+It's under development. Changes happen in branch [front-sympa](https://github.com/c-holtermann/Mailu/tree/front-sympa) in [this](https://github.com/c-holtermann/Mailu/tree/front-sympa/mailinglists/sympa) folder.
 
 <p align="leftr"><img src="docs/assets/logomark.png" alt="Mailu" height="200px"></p>
 
