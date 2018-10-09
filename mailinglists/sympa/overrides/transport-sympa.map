@@ -1,0 +1,1 @@
+sympa@{{ DOMAIN }}		smtp:{{ COMPOSE_PROJECT_NAME }}_mailinglist_1
