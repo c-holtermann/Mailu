@@ -1,9 +1,14 @@
-{{ DOMAIN }}				smtp:{{ COMPOSE_PROJECT_NAME }}_smtp_1
+# general sympa forwards, local to sympa
 sympa@{{ DOMAIN }}          		sympa:sympa@{{ DOMAIN }}
 listmaster@{{ DOMAIN }}     		sympa:listmaster@{{ DOMAIN }}
 bounce@{{ DOMAIN }}         		sympabounce:sympa@{{ DOMAIN }}
 abuse-feedback-report@{{ DOMAIN }}  	sympabounce:sympa@{{ DOMAIN }}
 
-{{ POSTMASTER }}@{{ DOMAIN }} 		smtp:{{ COMPOSE_PROJECT_NAME }}_smtp_1
 
+# forwards to global postfix
+# postmaster
+{{ POSTMASTER }}@{{ DOMAIN }} 		smtp:{{ COMPOSE_PROJECT_NAME }}_smtp_1
+# unknown {{ DOMAIN }} recipients
+{{ DOMAIN }}				smtp:{{ COMPOSE_PROJECT_NAME }}_smtp_1
+# everything unknown (i.e. all outgoing)
 * 					smtp:{{ COMPOSE_PROJECT_NAME }}_smtp_1
