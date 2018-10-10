@@ -85,9 +85,9 @@ runBashCommands([ "mkdir " + os.environ["SYMPADATADIR"],
 	"postmap hash:" + sysconfdir + "transport.sympa",
 	"postmap hash:" + sysconfdir + "virtual.sympa",
 	"/home/sympa/bin/sympa_newaliases.pl",
-	"mkdir -m 755 " + sysconfdir + listdomain,
-	"touch " + sysconfdir + listdomain + "/robot.conf",
-	"chown -R sympa:sympa " + sysconfdir + listdomain,
+	"mkdir -m 755 " + os.environ["SYMPADATADIR"] + "/" + listdomain,
+	"touch " + os.environ["SYMPADATADIR"] + "/" + listdomain + "/robot.conf",
+	"chown -R sympa:sympa " + os.environ["SYMPADATADIR"] + "/" + listdomain,
 	"mkdir -m 750 " + expldir + listdomain,
  	"chown sympa:sympa " + expldir + listdomain
 ])
