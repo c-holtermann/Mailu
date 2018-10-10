@@ -13,7 +13,7 @@ RUN wget https://github.com/sympa-community/sympa/releases/download/6.2.36/sympa
 RUN tar -xzf sympa-6.2.36.tar.gz
 RUN rm sympa-6.2.36.tar.gz
 
-RUN cd sympa-6.2.36; ./configure --with-initdir=/etc/init.d
+RUN cd sympa-6.2.36; ./configure --with-initdir=/etc/init.d --with-spooldir=/data/sympa/spool --with-expldir=/data/sympa/list_data --with-arcdir=/data/sympa/arc 
 RUN cd sympa-6.2.36; make
 RUN cd sympa-6.2.36; make install
 
