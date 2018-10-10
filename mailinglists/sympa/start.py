@@ -61,7 +61,7 @@ with open("/etc/sympa/sympa.conf", "a") as fo:
 
 sysconfdir = "/home/sympa/etc/"
 listdomain = os.environ.get('DOMAIN')
-expldir = "/home/sympa/list_data/"
+expldir = os.environ["SYMPADATADIR"] + "/list_data/"
 sympadatadir = os.environ["SYMPADATADIR"]
 
 shutil.copyfile("/conf/sympa/list_aliases.tt2", sysconfdir + "/list_aliases.tt2") # $SYSCONFDIR
