@@ -67,8 +67,14 @@ sympadatadir = os.environ["SYMPADATADIR"]
 shutil.copyfile("/conf/sympa/list_aliases.tt2", sysconfdir + "/list_aliases.tt2") # $SYSCONFDIR
 
 runBashCommands([ "mkdir " + os.environ["SYMPADATADIR"],
+        "mkdir " + os.environ["SYMPADATADIR"] + "/spool",
+        "mkdir " + os.environ["SYMPADATADIR"] + "/list_data",
+        "mkdir " + os.environ["SYMPADATADIR"] + "/arc",
         "touch " + os.environ["SYMPADATADIR"] + "/sympa.db",
         "chown sympa:sympa " + os.environ["SYMPADATADIR"],
+        "chown sympa:sympa " + os.environ["SYMPADATADIR"] + "/spool",
+        "chown sympa:sympa " + os.environ["SYMPADATADIR"] + "/list_data",
+        "chown sympa:sympa " + os.environ["SYMPADATADIR"] + "/arc",
         "chown sympa:sympa " + os.environ["SYMPADATADIR"] + "/sympa.db",
         "chmod a+w " + os.environ["SYMPADATADIR"],
         "touch " + sysconfdir +  "transport.sympa",
