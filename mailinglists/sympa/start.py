@@ -120,6 +120,27 @@ runBashCommands(["postmap hash:" + sysconfdir + "transport.sympa",
 	"postmap hash:" + sysconfdir + "virtual.sympa",
 	"/home/sympa/bin/sympa.pl --health_check"])
 
+# transport rules for global postfix
+with open("/overrides/sympa_transport.map", "w") as fo:
+    with open(os.environ["SYMPADATADIR"] + "/sympa_transport", "r") as fi:
+        lines = fi.readlines()
+        for line in lines:
+            print(line)
+            if line.find("transport map") != -1:
+                maildomain = line.split()[1]
+                (mail, domain) = maildomain.split("@")
+                # output headline
+                fo.write(line)
+            elif not (line[0] in ['#',' ']):
+                print ("->", line)
+                (source, destination) = line.split()
+                (sourcemail, sourcedomain) = source.split("@")
+                print(sourcemail, sourcedomain)
+                if sourcedomain == domain:
+                    outline = source + " " + "smtp:" + os.environ["COMPOSE_PROJECT_NAME"] + "_mailinglist_1"
+                    # write transport line
+                    fo.write(outline + "\n")
+
 # flush buffer when giving over log to init system and rsyslog
 sys.stdout.flush()
 
