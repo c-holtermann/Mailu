@@ -122,6 +122,8 @@ runBashCommands(["postmap hash:" + sysconfdir + "transport.sympa",
 
 # transport rules for global postfix
 with open("/overrides/sympa_transport.map", "w") as fo:
+    fo.write("#this file will get overwritten each time sympa container is being rebuilt - don't edit !")
+    fo.write("#file has been translated from " + os.environ["SYMPADATADIR"] + "/sympa_transport")
     with open(os.environ["SYMPADATADIR"] + "/sympa_transport", "r") as fi:
         lines = fi.readlines()
         for line in lines:
