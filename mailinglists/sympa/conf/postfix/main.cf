@@ -57,13 +57,13 @@ virtual_alias_maps = hash:/home/sympa/etc/virtual.sympa
 virtual_mailbox_domains = hash:/home/sympa/etc/transport.sympa
 virtual_mailbox_maps = $virtual_alias_maps,
   hash:/home/sympa/etc/transport.sympa,
-  hash:/home/sympa/etc/sympa_transport,
+  hash:{{ SYMPADATADIR }}/sympa_transport,
   hash:/home/sympa/etc/virtual.sympa
 
 # Mails are transported if required, then forwarded to Dovecot for delivery
 relay_domains = 
 transport_maps = hash:/home/sympa/etc/transport.sympa
-  hash:/home/sympa/etc/sympa_transport
+  hash:{{ SYMPADATADIR }}/sympa_transport
 virtual_transport = lmtp:inet:{{ HOST_LMTP }}
 
 # In order to prevent Postfix from running DNS query, enforce the use of the
