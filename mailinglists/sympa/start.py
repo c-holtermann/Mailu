@@ -130,6 +130,7 @@ with open("/overrides/sympa_transport.map", "w") as fo:
             if line.find("transport map") != -1:
                 maildomain = line.split()[1]
                 (mail, domain) = maildomain.split("@")
+                domain = domain[:-1]
                 # output headline
                 fo.write(line)
             elif not (line[0] in ['#',' ']):
