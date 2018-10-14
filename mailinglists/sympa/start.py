@@ -60,9 +60,10 @@ with open("/etc/sympa/sympa.conf", "a") as fo:
         fo.write(fi.read())
 
 sysconfdir = "/home/sympa/etc/"
-listdomain = os.environ.get('DOMAIN')
-expldir = os.environ["SYMPADATADIR"] + "/list_data/"
 sympadatadir = os.environ["SYMPADATADIR"]
+listdomain = os.environ.get('DOMAIN')
+#list data dir
+expldir = os.environ["SYMPADATADIR"] + "/list_data/"
 
 shutil.copyfile("/conf/sympa/list_aliases.tt2", sysconfdir + "/list_aliases.tt2") # $SYSCONFDIR
 
@@ -76,6 +77,7 @@ runShellCommands([ "mkdir " + os.environ["SYMPADATADIR"],
         "chown sympa:sympa " + os.environ["SYMPADATADIR"] + "/list_data",
         "chown sympa:sympa " + os.environ["SYMPADATADIR"] + "/arc",
         "chown sympa:sympa " + os.environ["SYMPADATADIR"] + "/sympa.db",
+        # wwsympa needs more permissions. a+w is too much though. TODO
         "chmod a+w " + os.environ["SYMPADATADIR"],
         "touch " + sysconfdir +  "transport.sympa",
 	"touch " + sysconfdir + "virtual.sympa",
@@ -121,6 +123,7 @@ runShellCommands(["postmap hash:" + sysconfdir + "transport.sympa",
 	"/home/sympa/bin/sympa.pl --health_check"])
 
 # transport rules for global postfix
+# translated from those of local postfic
 with open("/overrides/sympa_transport.map", "w") as fo:
     fo.write("#this file will get overwritten each time sympa container is being rebuilt - don't edit !")
     fo.write("#file has been translated from " + os.environ["SYMPADATADIR"] + "/sympa_transport")
