@@ -18,16 +18,16 @@ def regex_replace(s, find, replace):
 
 environment.DEFAULT_FILTERS['regex_replace'] = regex_replace
 
-def runBashCommand(bashCommand):
+def runShellCommand(bashCommand):
     print(">>" + bashCommand)
     returncode = subprocess.call(bashCommand.split())
     if returncode:
     	print(">> returncode: " + str(returncode))
     return returncode
 
-def runBashCommands(bashCommands):
+def runShellCommands(bashCommands):
     for bashCommand in bashCommands:
-        runBashCommand(bashCommand)
+        runShellCommand(bashCommand)
 
 convert = lambda src, dst: open(dst, "w").write(jinja2.Template(open(src).read()).render(**os.environ))
 
@@ -50,7 +50,7 @@ for postfix_file in glob.glob("/tmp/overrides/*.cf"):
 for postfix_file in glob.glob("/tmp/overrides/*.map"):
     convert(postfix_file, os.path.join("/overrides", os.path.basename(postfix_file)))
 
-runBashCommands(["usr/lib/postfix/post-install meta_directory=/etc/postfix create-missing",
+runShellCommands(["usr/lib/postfix/post-install meta_directory=/etc/postfix create-missing",
 	"/usr/lib/postfix/master &"])
 
 # sympa
@@ -66,7 +66,7 @@ sympadatadir = os.environ["SYMPADATADIR"]
 
 shutil.copyfile("/conf/sympa/list_aliases.tt2", sysconfdir + "/list_aliases.tt2") # $SYSCONFDIR
 
-runBashCommands([ "mkdir " + os.environ["SYMPADATADIR"],
+runShellCommands([ "mkdir " + os.environ["SYMPADATADIR"],
         "mkdir " + os.environ["SYMPADATADIR"] + "/spool",
         "mkdir " + os.environ["SYMPADATADIR"] + "/list_data",
         "mkdir " + os.environ["SYMPADATADIR"] + "/arc",
@@ -102,7 +102,7 @@ with open(sysconfdir + "virtual.sympa", "a") as fo:
     with open("/conf/sympa/virtual.sympa.out", "r") as fi: 
         fo.write(fi.read())
 
-runBashCommands(["postmap hash:" + sysconfdir + "transport.sympa",
+runShellCommands(["postmap hash:" + sysconfdir + "transport.sympa",
 	"postmap hash:" + sysconfdir + "virtual.sympa"])
 shutil.copyfile(os.path.join(sysconfdir, "virtual.sympa"), os.path.join(sympadatadir, "virtual.sympa"))
 shutil.copyfile(os.path.join(sysconfdir, "virtual.sympa.db"), os.path.join(sympadatadir, "virtual.sympa.db"))
@@ -116,7 +116,7 @@ with open("/etc/apache2/httpd.conf", "a") as fo:
     with open("/conf/apache2/httpd_append.conf.out", "r") as fi: 
         fo.write(fi.read())
 
-runBashCommands(["postmap hash:" + sysconfdir + "transport.sympa",
+runShellCommands(["postmap hash:" + sysconfdir + "transport.sympa",
 	"postmap hash:" + sysconfdir + "virtual.sympa",
 	"/home/sympa/bin/sympa.pl --health_check"])
 
