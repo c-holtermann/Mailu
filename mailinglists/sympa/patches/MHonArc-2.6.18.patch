@@ -1,0 +1,174 @@
+diff -cr MHonArc-2.6.18.orig/lib/mhamain.pl MHonArc-2.6.18/lib/mhamain.pl
+*** MHonArc-2.6.18.orig/lib/mhamain.pl	2011-01-09 08:18:35.000000000 -0800
+--- MHonArc-2.6.18/lib/mhamain.pl	2012-04-27 16:31:13.288034000 -0700
+***************
+*** 1561,1567 ****
+  ##	Create Index2MsgId if not defined
+  ##
+  sub defineIndex2MsgId {
+!     if (!defined(%Index2MsgId)) {
+  	foreach (keys %MsgId) {
+  	    $Index2MsgId{$MsgId{$_}} = $_;
+  	}
+--- 1561,1567 ----
+  ##	Create Index2MsgId if not defined
+  ##
+  sub defineIndex2MsgId {
+!     unless (%Index2MsgId) {
+  	foreach (keys %MsgId) {
+  	    $Index2MsgId{$MsgId{$_}} = $_;
+  	}
+diff -cr MHonArc-2.6.18.orig/lib/mhopt.pl MHonArc-2.6.18/lib/mhopt.pl
+*** MHonArc-2.6.18.orig/lib/mhopt.pl	2011-01-08 21:13:14.000000000 -0800
+--- MHonArc-2.6.18/lib/mhopt.pl	2012-04-27 16:29:39.183188000 -0700
+***************
+*** 864,870 ****
+  ##
+  sub update_data_2_1_to_later {
+      # we can preserve filter arguments
+!     if (defined(%main::MIMEFiltersArgs)) {
+  	warn qq/         preserving MIMEARGS...\n/;
+  	%readmail::MIMEFiltersArgs = %main::MIMEFiltersArgs;
+  	$IsDefault{'MIMEARGS'} = 0;
+--- 864,870 ----
+  ##
+  sub update_data_2_1_to_later {
+      # we can preserve filter arguments
+!     if (%main::MIMEFiltersArgs) {
+  	warn qq/         preserving MIMEARGS...\n/;
+  	%readmail::MIMEFiltersArgs = %main::MIMEFiltersArgs;
+  	$IsDefault{'MIMEARGS'} = 0;
+diff -cr MHonArc-2.6.18.orig/lib/readmail.pl MHonArc-2.6.18/lib/readmail.pl
+*** MHonArc-2.6.18.orig/lib/readmail.pl	2011-01-08 21:13:14.000000000 -0800
+--- MHonArc-2.6.18/lib/readmail.pl	2012-04-27 16:30:53.558852000 -0700
+***************
+*** 117,125 ****
+  ##  set to true.
+  
+  %MIMEDecoders			= ()
+!     unless defined(%MIMEDecoders);
+  %MIMEDecodersSrc		= ()
+!     unless defined(%MIMEDecodersSrc);
+  
+  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ##  %MIMECharSetConverters is the associative array for storing functions
+--- 117,125 ----
+  ##  set to true.
+  
+  %MIMEDecoders			= ()
+!     unless %MIMEDecoders;
+  %MIMEDecodersSrc		= ()
+!     unless %MIMEDecodersSrc;
+  
+  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ##  %MIMECharSetConverters is the associative array for storing functions
+***************
+*** 153,161 ****
+  ##  string.
+  
+  %MIMECharSetConverters			= ()
+!     unless defined(%MIMECharSetConverters);
+  %MIMECharSetConvertersSrc		= ()
+!     unless defined(%MIMECharSetConvertersSrc);
+  
+  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ##  %MIMEFilters is the associative array for storing functions that
+--- 153,161 ----
+  ##  string.
+  
+  %MIMECharSetConverters			= ()
+!     unless %MIMECharSetConverters;
+  %MIMECharSetConvertersSrc		= ()
+!     unless %MIMECharSetConvertersSrc;
+  
+  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ##  %MIMEFilters is the associative array for storing functions that
+***************
+*** 180,188 ****
+  ##  that all functions are defined before invoking MAILread_body.
+  
+  %MIMEFilters	= ()
+!     unless defined(%MIMEFilters);
+  %MIMEFiltersSrc	= ()
+!     unless defined(%MIMEFiltersSrc);
+  
+  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ##  %MIMEFiltersArgs is the associative array for storing any optional
+--- 180,188 ----
+  ##  that all functions are defined before invoking MAILread_body.
+  
+  %MIMEFilters	= ()
+!     unless %MIMEFilters;
+  %MIMEFiltersSrc	= ()
+!     unless %MIMEFiltersSrc;
+  
+  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ##  %MIMEFiltersArgs is the associative array for storing any optional
+***************
+*** 196,202 ****
+  ##  listed for a function if both are applicable.
+  
+  %MIMEFiltersArgs	= ()
+!     unless defined(%MIMEFiltersArgs);
+  
+  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ##  %MIMEExcs is the associative array listing which data types
+--- 196,202 ----
+  ##  listed for a function if both are applicable.
+  
+  %MIMEFiltersArgs	= ()
+!     unless %MIMEFiltersArgs;
+  
+  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ##  %MIMEExcs is the associative array listing which data types
+***************
+*** 206,212 ****
+  ##	Values => <should evaluate to a true expression>
+  
+  %MIMEExcs			= ()
+!     unless defined(%MIMEExcs);
+  
+  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ##  %MIMEIncs is the associative array listing which data types
+--- 206,212 ----
+  ##	Values => <should evaluate to a true expression>
+  
+  %MIMEExcs			= ()
+!     unless %MIMEExcs;
+  
+  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ##  %MIMEIncs is the associative array listing which data types
+***************
+*** 220,226 ****
+  ##  be used to only allow a well-defined set of content-types.
+  
+  %MIMEIncs			= ()
+!     unless defined(%MIMEIncs);
+  
+  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ##  %MIMECharsetAliases is a mapping of charset names to charset names.
+--- 220,226 ----
+  ##  be used to only allow a well-defined set of content-types.
+  
+  %MIMEIncs			= ()
+!     unless %MIMEIncs;
+  
+  ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ##  %MIMECharsetAliases is a mapping of charset names to charset names.
+***************
+*** 231,237 ****
+  ##	Values => real charset name
+  ##
+  %MIMECharsetAliases = ()
+!     unless defined(%MIMECharsetAliases);
+  
+  ##---------------------------------------------------------------------------
+  ##	Text entity-related variables
+--- 231,237 ----
+  ##	Values => real charset name
+  ##
+  %MIMECharsetAliases = ()
+!     unless %MIMECharsetAliases;
+  
+  ##---------------------------------------------------------------------------
+  ##	Text entity-related variables
