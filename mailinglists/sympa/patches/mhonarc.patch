@@ -1,0 +1,22 @@
+--- /usr/local/share/perl5/site_perl/orig/mhamain.pl
++++ /usr/local/share/perl5/site_perl/mhamain.pl
+@@ -1562,7 +1562,7 @@
+ ##
+ sub defineIndex2MsgId {
+     no warnings qw(deprecated);
+-    if (!defined(%Index2MsgId)) {
++    unless (%Index2MsgId) {
+ 	foreach (keys %MsgId) {
+ 	    $Index2MsgId{$MsgId{$_}} = $_;
+ 	}
+--- /usr/local/share/perl5/site_perl/orig/mhopt.pl
++++ /usr/local/share/perl5/site_perl/mhopt.pl
+@@ -865,7 +865,7 @@
+ sub update_data_2_1_to_later {
+     no warnings qw(deprecated);
+     # we can preserve filter arguments
+-    if (defined(%main::MIMEFiltersArgs)) {
++    if (%main::MIMEFiltersArgs) {
+ 	warn qq/         preserving MIMEARGS...\n/;
+ 	%readmail::MIMEFiltersArgs = %main::MIMEFiltersArgs;
+ 	$IsDefault{'MIMEARGS'} = 0;
