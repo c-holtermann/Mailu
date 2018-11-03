@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/sbin/openrc-run
 #
 # sympa			Mailing Lists Management System
 #
@@ -59,6 +59,9 @@ Linux)
     if [ -f /etc/slackware-version ] ; then
 	OSDIST='Slack'
     fi
+    if [ -f /etc/alpine-release ] ; then
+	OSDIST='Alpine'
+    fi		
     ;;
 *BSD)
     OSDIST=$OSTYPE
@@ -79,7 +82,7 @@ fi
 sympa_status() {
     # Test syntax.
     if [ $# = 0 ] ; then
-        echo "Usage: sympa_status {program}"
+        einfo "Usage: sympa_status {program}"
         return 1
     fi
  
@@ -89,7 +92,6 @@ sympa_status() {
 
     else
 	comm=`echo $1.pl | cut -c-8`
-
 	if [ -f ${sympapiddir}/$1.pid ] ; then
 	    pids=`head -1 ${sympapiddir}/$1.pid`
 	    runningpids=""
@@ -97,6 +99,8 @@ sympa_status() {
 		for pid in $pids; do
 		    if [ "$OSTYPE" = "BSD" ]; then
 			running=`ps -axw | grep "^[[:space:]]*$pid[[:space:]]"`
+		    elif [ "$OSDIST" = "Alpine" ]; then
+			running=`ps -A | grep "^[[:space:]]*$pid .*$comm"`
 		    else
 			running=`ps -A | grep "$pid ..* $comm"`
 		    fi
@@ -105,31 +109,31 @@ sympa_status() {
 		    fi
 		done
 		if [ "$runningpids" != "" ]; then
-		    echo "$1 (pid(s)$runningpids) is active..."
+		    einfo "$1 (pid(s)$runningpids) is active..."
 		    return 0
 		else
-		    echo "$1 died, pid file remains."
+		    eerror "$1 died, pid file remains."
 		    return 1
 		fi
 	    fi
 	fi
-	echo "$1 is stopped."
+	einfo "$1 is stopped."
 	return 3
     fi
 }
 
 # Health check
 sympa_check() {
-	echo $echo_opt "Checking environment: "
+	einfo "Checking environment"
 	if [ ${use_functions} ]; then
 		$sympadir/sympa.pl --health_check && success || failure
 		return $?
 	else
 		if $sympadir/sympa.pl --health_check; then
-			echo "success"
+			einfo "success"
 			return 0
 		else
-			echo "failure"
+			eerror "failure"
 			return 1
 		fi
 	fi
@@ -152,31 +156,30 @@ sympa_module_start() {
 	if [ ${use_functions} ]; then
 		$sympadir/$1.pl $startparam && success || failure
 	else
-		$sympadir/$1.pl $startparam && echo "success" || echo "failure"
+		$sympadir/$1.pl $startparam && einfo "success" || eerror "failure"
 	fi
-	echo
 }
 
 # Test state of module before startup
 sympa_start() {
     if [ $# = 0 ] ; then
-        echo "Usage: sympa_start {program}"
+        einfo "Usage: sympa_start {program}"
         return 1
     fi
  
 	sympa_status $1 > /dev/null
 	case "$?" in
 		3)
-			echo $echo_opt "Starting module $1.pl: "
+			einfo "Starting module $1.pl"
 			sympa_module_start $1
 			;;
 		1) 
-			echo $echo_opt "Starting $1, overwriting old pid file."
+			ewarn "Starting $1, overwriting old pid file."
 			sympa_module_start $1
 			;;
 		0)
-			echo "$1 seems active. No action will be taken."
-			echo "Try \"sympa status\" or \"sympa restart"\".
+			eerror "$1 seems active. No action will be taken."
+			eerror "Try \"sympa status\" or \"sympa restart"\".
 			;;
 	esac
 }
@@ -184,7 +187,7 @@ sympa_start() {
 # Stop a module
 sympa_stop() {
     if [ $# = 0 ] ; then
-        echo "Usage: sympa_stop {program}"
+        ewarn "Usage: sympa_stop {program}"
         return 1
     fi
     if [ $1 = 'sympa-creation' ]; then
@@ -195,7 +198,7 @@ sympa_stop() {
     comm=`echo $process_name.pl | cut -c-8`
 
     if [ -f ${sympapiddir}/$1.pid ]; then
-	echo $echo_opt "Stopping module $process_name.pl: "
+	einfo "Stopping module $process_name.pl"
 	pids=`head -1 ${sympapiddir}/$1.pid`
 	runcount=0
 	if [ "$pids" != "" ]; then
@@ -211,7 +214,7 @@ sympa_stop() {
 			if [ ${use_functions} ]; then
 			    failure
 			else
-			    echo 'failure'
+			    eerror 'failure'
 			fi
 			return 3
 		    fi
@@ -219,6 +222,8 @@ sympa_stop() {
 		    kill -TERM $pid >/dev/null 2>&1
 		    if [ "$OSTYPE" = "BSD" ]; then
 			running=`ps -axw | grep "^[[:space:]]*$pid[[:space:]]"`
+                    elif [ "$OSDIST" = "Alpine" ]; then
+			running=`ps -A | grep "^[[:space:]]*$pid .*$comm"`
 		    else
 			running=`ps -A | grep "$pid ..* $comm"`
 		    fi
@@ -229,6 +234,8 @@ sympa_stop() {
 		    sleep 2
 		    if [ "$OSTYPE" = "BSD" ]; then
 			running=`ps -axw | grep "^[[:space:]]*$pid[[:space:]]"`
+                    elif [ "$OSDIST" = "Alpine" ]; then
+			running=`ps -A | grep "^[[:space:]]*$pid .*$comm"`
 		    else
 			running=`ps -A | grep "$pid ..* $comm"`
 		    fi
@@ -244,14 +251,13 @@ sympa_stop() {
 	    if [ ${use_functions} ]; then
 		success
 	    else
-		echo 'success'
+		einfo 'success'
 	    fi
 	else
-	    echo 'died'
+	    eerror 'died'
 	fi
-	echo
     else
-	echo "Module $process_name.pl not running"
+	ewarn "Module $process_name.pl not running"
     fi
     return 0
 }
@@ -266,12 +272,11 @@ if [ ${OSTYPE} != "Linux" -a ${OSTYPE} != "BSD" -a ${OSTYPE} != "SunOS" -a ${OST
 fi
 
 # Check config files
-[ -d $sympadir ] || exit 0
-[ -f $sympaconf ] || exit 0
+[ -d $sympadir ] || exit 0;
+[ -f $sympaconf ] || exit 0;
 
-# See how we were called.
-case "$1" in
-  start)
+
+start() {
 	if [ ! -f ${sympalockdir}/sympa ]; then
 		echo "Starting Sympa subsystem: "
 		sympa_check || exit 1
@@ -289,8 +294,10 @@ case "$1" in
 
 	fi
 	RETVAL=$?
-	;;
-  stop)
+	exit $RETVAL
+}
+
+stop() {
 	echo "Stopping Sympa subsystem: "
 	sympa_stop bounced
 	sympa_stop archived
@@ -316,8 +323,9 @@ case "$1" in
 		rm -f ${sympalockdir}/sympa
 	fi
 	RETVAL=$?
-	;;
-  status)
+}
+
+status() {
 	echo "Status of Sympa subsystem: "
 	if [ -f ${sympalockdir}/sympa ]; then
 		echo "Status file for subsystem found."
@@ -330,17 +338,9 @@ case "$1" in
 	sympa_status bounced
 	sympa_status task_manager
 	RETVAL=$?
-	;;
-  restart)
-	echo "Restarting Sympa subsystem: "
-	$0 stop && $0 start
-	echo
-	;;
-  *)
+}
+
+usage() {
 	echo "Usage: $0 {start|stop|status|restart}"
 	exit 1
-	;;
-esac
-
-exit $RETVAL
-
+}
