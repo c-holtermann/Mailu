@@ -65,7 +65,7 @@ COPY init.d/* /etc/init.d/
 RUN rc-update add rsyslog
 RUN rc-update add apache2 boot
 RUN rc-update add postfix boot
-RUN rc-update add wwsympa2 default
+RUN rc-update add wwsympa default
 RUN rc-update add sympa2 default
 
 EXPOSE 80/tcp
