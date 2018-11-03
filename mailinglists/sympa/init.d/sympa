@@ -130,10 +130,10 @@ sympa_check() {
 		return $?
 	else
 		if $sympadir/sympa.pl --health_check; then
-			einfo "success"
+			eend 0
 			return 0
 		else
-			eerror "failure"
+			eend 1
 			return 1
 		fi
 	fi
@@ -156,7 +156,8 @@ sympa_module_start() {
 	if [ ${use_functions} ]; then
 		$sympadir/$1.pl $startparam && success || failure
 	else
-		$sympadir/$1.pl $startparam && einfo "success" || eerror "failure"
+		$sympadir/$1.pl $startparam
+		eend $?
 	fi
 }
 
@@ -206,6 +207,8 @@ sympa_stop() {
 		killcount=0
 		if [ "$OSTYPE" = "BSD" ]; then
 		    running=`ps -axw | grep "^[[:space:]]*$pid[[:space:]]"`
+	        elif [ "$OSDIST" = "Alpine" ]; then
+			running=`ps -A | grep "^[[:space:]]*$pid .*$comm"`
 		else
 		    running=`ps -A | grep "$pid ..* $comm"`
 		fi
@@ -214,7 +217,7 @@ sympa_stop() {
 			if [ ${use_functions} ]; then
 			    failure
 			else
-			    eerror 'failure'
+			    eend 1
 			fi
 			return 3
 		    fi
@@ -251,10 +254,11 @@ sympa_stop() {
 	    if [ ${use_functions} ]; then
 		success
 	    else
-		einfo 'success'
+		eend 0
 	    fi
 	else
 	    eerror 'died'
+	    eend 1
 	fi
     else
 	ewarn "Module $process_name.pl not running"
