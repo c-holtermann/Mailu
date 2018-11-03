@@ -1,15 +1,18 @@
 FROM alpine:3.8
 
-RUN apk add --no-cache openrc rsyslog python py-jinja2 gcc g++ make perl perl-class-singleton perl-encode-locale perl-dev perl-datetime perl-uri perl-dbi perl-xml-libxml perl-html-parser perl-mime-charset curl wget perl-unicode-linebreak perl-file-copy-recursive perl-term-progressbar perl-http-message perl-io-stringy perl-lwp-useragent-determined perl-regexp-common-net-cidr perl-cgi perl-template-toolkit perl-html-tree perl-mime-tools perl-html-formattext-withlinks-andtables perl-dbd-sqlite perl-dbd-mysql perl-dbd-pg perl-email-address apache2 libxml2-dev apache2-utils apache2-proxy apache-mod-fcgid perl-archive-zip perl-cgi-fast perl-datetime spawn-fcgi postfix postfix-sqlite postfix-pcre patch
+RUN apk add --no-cache openrc rsyslog python py-jinja2 gcc g++ make perl perl-class-singleton perl-encode-locale perl-dev perl-datetime perl-uri perl-dbi perl-xml-libxml perl-html-parser perl-mime-charset curl wget perl-unicode-linebreak perl-file-copy-recursive perl-term-progressbar perl-http-message perl-io-stringy perl-lwp-useragent-determined perl-regexp-common-net-cidr perl-cgi perl-template-toolkit perl-html-tree perl-mime-tools perl-html-formattext-withlinks-andtables perl-dbd-sqlite perl-dbd-mysql perl-dbd-pg perl-email-address apache2 libxml2-dev apache2-utils apache2-proxy apache-mod-fcgid perl-archive-zip perl-cgi-fast perl-datetime spawn-fcgi postfix postfix-sqlite postfix-pcre patch openssl openssl-dev unixodbc unixodbc-dev
 
 RUN curl -L http://xrl.us/cpanm > /bin/cpanm && chmod +x /bin/cpanm
-RUN cpanm Mail::Address HTML::StripScripts::Parser Net::CIDR File::NFSLock MHonArc::UTF8 MIME::EncWords Locale::Messages DateTime::Format::Mail
+RUN cpanm Mail::Address HTML::StripScripts::Parser Net::CIDR File::NFSLock MHonArc::UTF8 MIME::EncWords Locale::Messages DateTime::Format::Mail Crypt::CipherSaber Data::Password Crypt::Eksblowfish Clone 
+RUN cpanm Net::SSLeay IO::Socket::SSL Crypt::OpenSSL::X509
+RUN cpanm Math::Base::Convert MIME::Lite::HTML --force
+RUN cpanm Crypt::SMIME DBD::CSV DBD::ODBC IO::Socket::SSL Mail::DKIM::Verifier Net::DNS Net::LDAP 
+
+# SOAP::Lite
 
 RUN mkdir /patches
 COPY patches/mhonarc.patch /patches
 RUN patch -p0 -i /patches/mhonarc.patch
-
-RUN cpanm MIME::Lite::HTML --force
 
 RUN addgroup -S sympa
 RUN adduser -G sympa -s /sbin/nologin sympa -D
@@ -25,7 +28,7 @@ RUN cd sympa-6.2.36; make install
 RUN mkdir /etc/mail
 RUN chown sympa:sympa /etc/mail
 
-run cp /home/sympa/bin/wwsympa-wrapper.fcgi /var/www/localhost/fcgi-bin
+RUN cp /home/sympa/bin/wwsympa-wrapper.fcgi /var/www/localhost/fcgi-bin
 
 RUN mv /etc/apache2/conf.d/proxy.conf /etc/apache2/conf.d/proxy.conf.package
 COPY conf /conf
