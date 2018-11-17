@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y \
       libjpeg62-turbo-dev \
       libmcrypt-dev \
       libpng-dev \
- && docker-php-ext-install pdo_mysql mcrypt
+ && docker-php-ext-install pdo_mysql mcrypt zip
 
 ENV ROUNDCUBE_URL https://github.com/roundcube/roundcubemail/releases/download/1.3.8/roundcubemail-1.3.8-complete.tar.gz
 
