@@ -50,8 +50,11 @@ for postfix_file in glob.glob("/tmp/overrides/*.cf"):
 for postfix_file in glob.glob("/tmp/overrides/*.map"):
     convert(postfix_file, os.path.join("/overrides", os.path.basename(postfix_file)))
 
-runShellCommands(["usr/lib/postfix/post-install meta_directory=/etc/postfix create-missing",
-	"/usr/lib/postfix/master &"])
+runShellCommands(["ls usr/libexec/postfix/"])
+
+runShellCommands(["usr/libexec/postfix/post-install meta_directory=/etc/postfix create-missing"])
+#,
+#	"/usr/lib/postfix/master &"])
 
 # sympa
 convert("/conf/sympa/sympa.conf", "/conf/sympa/sympa.conf.out")
