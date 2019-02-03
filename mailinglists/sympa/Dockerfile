@@ -14,13 +14,15 @@ RUN patch -p0 -i /patches/mhonarc.patch
 RUN addgroup -S sympa
 RUN adduser -G sympa -s /sbin/nologin sympa -D
 
-RUN wget https://github.com/sympa-community/sympa/releases/download/6.2.36/sympa-6.2.36.tar.gz 
-RUN tar -xzf sympa-6.2.36.tar.gz
-RUN rm sympa-6.2.36.tar.gz
+ENV sympa_version=6.2.38
 
-RUN cd sympa-6.2.36; ./configure --with-initdir=/etc/init.d --with-spooldir=/data/sympa/spool --with-expldir=/data/sympa/list_data --with-arcdir=/data/sympa/arc 
-RUN cd sympa-6.2.36; make
-RUN cd sympa-6.2.36; make install
+RUN wget https://github.com/sympa-community/sympa/releases/download/$sympa_version/sympa-$sympa_version.tar.gz 
+RUN tar -xzf sympa-$sympa_version.tar.gz
+RUN rm sympa-$sympa_version.tar.gz
+
+RUN cd sympa-$sympa_version; ./configure --with-initdir=/etc/init.d --with-spooldir=/data/sympa/spool --with-expldir=/data/sympa/list_data --with-arcdir=/data/sympa/arc 
+RUN cd sympa-$sympa_version; make
+RUN cd sympa-$sympa_version; make install
 
 RUN mkdir /etc/mail
 RUN chown sympa:sympa /etc/mail
