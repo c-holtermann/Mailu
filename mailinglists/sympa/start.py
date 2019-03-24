@@ -126,7 +126,7 @@ runShellCommands(["postmap hash:" + sysconfdir + "transport.sympa",
 	"/home/sympa/bin/sympa.pl --health_check"])
 
 # transport rules for global postfix
-# translated from those of local postfic
+# translated from those of local postfix
 with open("/overrides/sympa_transport.map", "w") as fo:
     fo.write("#this file will get overwritten each time sympa container is being rebuilt - don't edit !")
     fo.write("#file has been translated from " + os.environ["SYMPADATADIR"] + "/sympa_transport")
