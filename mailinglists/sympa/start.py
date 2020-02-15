@@ -61,6 +61,7 @@ convert("/conf/sympa/sympa.conf", "/conf/sympa/sympa.conf.out")
 with open("/etc/sympa/sympa.conf", "a") as fo:
     with open("/conf/sympa/sympa.conf.out", "r") as fi: 
         fo.write(fi.read())
+        fo.write("\n")
 
 sysconfdir = "/home/sympa/etc/"
 sympadatadir = os.environ["SYMPADATADIR"]
@@ -101,11 +102,13 @@ convert("/conf/sympa/transport.sympa", "/conf/sympa/transport.sympa.out")
 with open(sysconfdir + "transport.sympa", "a") as fo:
     with open("/conf/sympa/transport.sympa.out", "r") as fi: 
         fo.write(fi.read())
+        fo.write("\n")
 
 convert("/conf/sympa/virtual.sympa", "/conf/sympa/virtual.sympa.out")
 with open(sysconfdir + "virtual.sympa", "a") as fo:
     with open("/conf/sympa/virtual.sympa.out", "r") as fi: 
         fo.write(fi.read())
+        fo.write("\n")
 
 runShellCommands(["postmap hash:" + sysconfdir + "transport.sympa",
 	"postmap hash:" + sysconfdir + "virtual.sympa"])
@@ -120,6 +123,7 @@ convert("/conf/apache2/proxy.conf", "/etc/apache2/conf.d/proxy.conf")
 with open("/etc/apache2/httpd.conf", "a") as fo:
     with open("/conf/apache2/httpd_append.conf.out", "r") as fi: 
         fo.write(fi.read())
+        fo.write("\n")
 
 runShellCommands(["postmap hash:" + sysconfdir + "transport.sympa",
 	"postmap hash:" + sysconfdir + "virtual.sympa",

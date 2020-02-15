@@ -1,4 +1,5 @@
 sympa@{{ DOMAIN }}			smtp:{{ COMPOSE_PROJECT_NAME }}_mailinglist_1
 listmaster@{{ DOMAIN }}     		smtp:{{ COMPOSE_PROJECT_NAME }}_mailinglist_1
 bounce@{{ DOMAIN }}         		smtp:{{ COMPOSE_PROJECT_NAME }}_mailinglist_1	
-abuse-feedback-report@{{ DOMAIN }}  	smtp:{{ COMPOSE_PROJECT_NAME }}_mailinglist_1	
+abuse-feedback-report@{{ DOMAIN }}  	smtp:{{ COMPOSE_PROJECT_NAME }}_mailinglist_1
+	
