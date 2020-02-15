@@ -1,2 +1,3 @@
 sympa-request@{{ DOMAIN }}	postmaster@{{ DOMAIN }}
 sympa-owner@{{ DOMAIN }}	postmaster@{{ DOMAIN }}
+
