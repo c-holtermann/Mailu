@@ -21,6 +21,9 @@ if args["WEBMAIL"] != "none":
 if args["WEBDAV"] != "none":
     args["WEBDAV_ADDRESS"] = system.resolve_address(args.get("HOST_WEBDAV", "webdav:5232"))
 
+if args["MAILINGLIST"] != "none":
+    args["MAILINGLIST_ADDRESS"] = "127.0.0.1:8080/sympa"
+
 # TLS configuration
 cert_name = os.getenv("TLS_CERT_FILENAME", default="cert.pem")
 keypair_name = os.getenv("TLS_KEYPAIR_FILENAME", default="key.pem")
