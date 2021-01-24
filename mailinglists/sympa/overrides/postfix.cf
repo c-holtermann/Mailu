@@ -1,5 +1,4 @@
-virtual_alias_maps=\${sql}sqlite-virtual_alias_maps.cf,hash:/etc/postfix/virtual-sympa.map
-virtual_mailbox_domains = \${sql}sqlite-virtual_mailbox_domains.cf,hash:/etc/postfix/transport-sympa.map
-virtual_mailbox_maps = \$virtual_alias_maps,hash:/etc/postfix/transport-sympa.map,hash:/etc/postfix/sympa_transport.map,hash:/etc/postfix/virtual-sympa.map
-transport_maps = \${sql}sqlite-transport.cf,hash:/etc/postfix/transport-sympa.map,hash:/etc/postfix/sympa_transport.map
-
+virtual_alias_maps=${podop}alias,hash:/etc/postfix/virtual-sympa.map
+virtual_mailbox_domains = ${podop}domain,hash:/etc/postfix/transport-sympa.map
+virtual_mailbox_maps = ${podop}mailbox,hash:/etc/postfix/transport-sympa.map,hash:/etc/postfix/sympa_transport.map,hash:/etc/postfix/virtual-sympa.map
+transport_maps = ${podop}transport,hash:/etc/postfix/transport-sympa.map,hash:/etc/postfix/sympa_transport.map
