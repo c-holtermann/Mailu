@@ -1,4 +1,4 @@
-virtual_alias_maps=${podop}alias,hash:/etc/postfix/virtual-sympa.map
-virtual_mailbox_domains = ${podop}domain,hash:/etc/postfix/transport-sympa.map
-virtual_mailbox_maps = ${podop}mailbox,hash:/etc/postfix/transport-sympa.map,hash:/etc/postfix/sympa_transport.map,hash:/etc/postfix/virtual-sympa.map
-transport_maps = ${podop}transport,hash:/etc/postfix/transport-sympa.map,hash:/etc/postfix/sympa_transport.map
+virtual_alias_maps= \${podop}alias,hash:/etc/postfix/virtual-sympa.map
+virtual_mailbox_domains = \${podop}domain,hash:/etc/postfix/transport-sympa.map
+virtual_mailbox_maps = \${podop}mailbox,hash:/etc/postfix/transport-sympa.map,hash:/etc/postfix/sympa_transport.map,hash:/etc/postfix/virtual-sympa.map
+transport_maps = \${podop}transport,hash:/etc/postfix/transport-sympa.map,hash:/etc/postfix/sympa_transport.map
