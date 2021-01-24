@@ -11,7 +11,7 @@ RUN pip3 install socrate
 RUN pip3 install "podop>0.2.5"
 
 # Image specific layers under this line
-RUN apk add --no-cache postfix postfix-pcre cyrus-sasl-plain
+RUN apk add --no-cache postfix postfix-pcre postfix-sqlite cyrus-sasl-plain
 
 COPY conf /conf
 COPY start.py /start.py
