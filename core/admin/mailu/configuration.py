@@ -61,6 +61,7 @@ DEFAULT_CONFIG = {
     'HOST_AUTHSMTP': 'smtp',
     'HOST_ADMIN': 'admin',
     'HOST_ANTISPAM': 'antispam:11334',
+    'HOST_MAILINGLIST': 'mailinglist',
     'HOST_WEBMAIL': 'webmail',
     'HOST_WEBDAV': 'webdav:5232',
     'HOST_REDIS': 'redis',
