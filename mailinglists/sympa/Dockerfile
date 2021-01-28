@@ -14,7 +14,7 @@ RUN patch -p0 -i /patches/mhonarc.patch
 RUN addgroup -S sympa
 RUN adduser -G sympa -s /sbin/nologin sympa -D
 
-ENV sympa_version=6.2.52
+ENV sympa_version=6.2.54
 
 RUN wget https://github.com/sympa-community/sympa/releases/download/$sympa_version/sympa-$sympa_version.tar.gz 
 RUN tar -xzf sympa-$sympa_version.tar.gz
