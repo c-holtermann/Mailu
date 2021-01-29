@@ -35,6 +35,7 @@ convert = lambda src, dst: open(dst, "w").write(jinja2.Template(open(src).read()
 os.environ["FRONT_ADDRESS"] = socket.gethostbyname(os.environ.get("FRONT_ADDRESS", "front"))
 os.environ["HOST_ANTISPAM"] = os.environ.get("HOST_ANTISPAM", "antispam:11332")
 os.environ["HOST_LMTP"] = os.environ.get("HOST_LMTP", "imap:2525")
+os.environ["MAILINGLIST_ADDRESS"] = "/sympa"
 
 os.environ["SYMPADATADIR"] = "/data/sympa"
 
@@ -132,8 +133,8 @@ runShellCommands(["postmap hash:" + sysconfdir + "transport.sympa",
 # transport rules for global postfix
 # translated from those of local postfix
 with open("/overrides/sympa_transport.map", "w") as fo:
-    fo.write("#this file will get overwritten each time sympa container is being rebuilt - don't edit !")
-    fo.write("#file has been translated from " + os.environ["SYMPADATADIR"] + "/sympa_transport")
+    fo.write("#this file will get overwritten each time sympa container is being rebuilt - don't edit !\n")
+    fo.write("#file has been translated from " + os.environ["SYMPADATADIR"] + "/sympa_transport\n")
     with open(os.environ["SYMPADATADIR"] + "/sympa_transport", "r") as fi:
         lines = fi.readlines()
         for line in lines:
