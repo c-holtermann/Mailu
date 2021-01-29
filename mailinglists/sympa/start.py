@@ -10,6 +10,7 @@ import socket
 import glob
 import subprocess
 import sys
+from socrate import system, conf
 
 # Custom filter method
 def regex_replace(s, find, replace):
@@ -37,6 +38,9 @@ os.environ["HOST_ANTISPAM"] = os.environ.get("HOST_ANTISPAM", "antispam:11332")
 os.environ["HOST_LMTP"] = os.environ.get("HOST_LMTP", "imap:2525")
 
 os.environ["SYMPADATADIR"] = "/data/sympa"
+
+if os.environ["MAILINGLIST"] != "none":
+        os.environ["MAILINGLIST_ADDRESS"] = system.resolve_address(os.environ.get("HOST_MAILINGLIST", "mailinglist"))
 
 convert("/conf/rsyslog/rsyslog.conf", "/etc/rsyslog.conf")
 
