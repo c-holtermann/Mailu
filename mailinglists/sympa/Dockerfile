@@ -7,14 +7,10 @@ RUN cpanm Mail::Address HTML::StripScripts::Parser File::NFSLock MHonArc::UTF8 M
 RUN cpanm Math::Base::Convert MIME::Lite::HTML --force
 RUN cpanm Crypt::SMIME DBD::CSV  Net::DNS Net::LDAP 
 
-RUN mkdir /patches
-COPY patches/mhonarc.patch /patches
-RUN patch -p0 -i /patches/mhonarc.patch
-
 RUN addgroup -S sympa
 RUN adduser -G sympa -s /sbin/nologin sympa -D
 
-ENV sympa_version=6.2.54
+ENV sympa_version=6.2.56
 
 RUN wget https://github.com/sympa-community/sympa/releases/download/$sympa_version/sympa-$sympa_version.tar.gz 
 RUN tar -xzf sympa-$sympa_version.tar.gz
