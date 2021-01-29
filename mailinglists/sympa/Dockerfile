@@ -18,7 +18,7 @@ RUN wget https://github.com/sympa-community/sympa/releases/download/$sympa_versi
 RUN tar -xzf sympa-$sympa_version.tar.gz
 RUN rm sympa-$sympa_version.tar.gz
 
-RUN cd sympa-$sympa_version; ./configure --with-initdir=/etc/init.d --with-spooldir=/data/sympa/spool --with-expldir=/data/sympa/list_data --with-arcdir=/data/sympa/arc 
+RUN cd sympa-$sympa_version; ./configure --with-initdir=/etc/init.d --with-spooldir=/data/sympa/spool --with-expldir=/data/sympa/list_data
 RUN cd sympa-$sympa_version; make
 RUN cd sympa-$sympa_version; make install
 
